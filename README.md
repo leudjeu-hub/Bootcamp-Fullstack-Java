@@ -5,6 +5,8 @@ Un bloc de semaines, un outil, un livrable.
 
 👉 **Suivre le cours en ligne : https://leudjeu-hub.github.io/Bootcamp-Fullstack-Java/**
 
+🌍 Disponible en **français**, **English** et **Deutsch** (sélecteur FR / EN / DE en haut de la page).
+
 ## Le programme
 
 | Semaines | Module | Contenu | Livrable |
@@ -29,6 +31,7 @@ entrées et sorties de stock, alertes de réapprovisionnement, rôles `VENDEUR` 
 - Exercices avec solution cachée (« Voir une solution »)
 - Progression enregistrée dans le navigateur
 - Navigation au clavier (← →), adapté au mobile
+- 3 langues : français, anglais, allemand (le code des exemples reste identique)
 - Un seul fichier `index.html`, sans dépendance
 
 ## Utiliser le cours en local
@@ -41,7 +44,8 @@ open index.html   # ou double-clic sur le fichier
 
 ## Modifier le contenu
 
-Le contenu est écrit dans `source/content.py` et injecté dans `source/template.html` :
+Le contenu français est dans `source/content.py`, les traductions dans `source/content_en.py` et `source/content_de.py`,
+les textes de l'interface dans `source/ui.py`. Le tout est injecté dans `source/template.html` :
 
 ```bash
 cd source
