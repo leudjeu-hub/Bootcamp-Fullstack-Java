@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootcamp Fullstack Java – 16 semaines</title>
+<meta name="description" content="Cours interactif et gratuit pour apprendre le développement Fullstack Java en 16 semaines : Git, Java, SQL/MySQL, Spring Boot, React, GitHub Actions.">
+<style>
+:root{
+  --bg:#05082a; --bg2:#0b1040; --card:#111850; --line:#232c6e;
+  --text:#eef1ff; --muted:#9aa3d6; --accent:#7CFC00; --accent2:#00D1FF;
+  --ok:#3ddc84; --ko:#ff5c7a; --code:#070b30;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+a{color:var(--accent2)}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em;background:var(--code);padding:.1em .4em;border-radius:6px;border:1px solid var(--line)}
+button{font:inherit;cursor:pointer}
+.hidden{display:none!important}
+
+/* ---------- Top bar ---------- */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:rgba(5,8,42,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.3px;cursor:pointer;display:flex;align-items:center;gap:8px}
+.brand span{color:var(--accent)}
+.global-progress{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted)}
+.bar{width:140px;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width .4s}
+
+/* ---------- Home ---------- */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.hero{padding:64px 0 40px;text-align:center}
+.kicker{display:inline-block;text-transform:uppercase;letter-spacing:2px;font-size:.78rem;color:var(--accent);border:1.5px solid var(--accent);border-radius:99px;padding:4px 14px;margin-bottom:18px}
+.hero h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.1;margin:0 0 14px}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--muted);max-width:680px;margin:0 auto 26px;font-size:1.08rem}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:28px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.85rem}
+.cta{background:var(--accent);color:#05082a;border:none;border-radius:12px;padding:13px 26px;font-weight:800;font-size:1rem;box-shadow:0 0 24px rgba(124,252,0,.25)}
+.cta.secondary{background:transparent;color:var(--text);border:1.5px solid var(--line);box-shadow:none}
+.section{padding:36px 0}
+.section h2{font-size:1.7rem;margin:0 0 6px}
+.section .sub{color:var(--muted);margin:0 0 22px}
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.method div{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.method b{display:block;font-size:1.05rem;margin-bottom:4px;color:var(--accent)}
+.timeline{display:grid;gap:14px}
+.mod{display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:18px 20px;cursor:pointer;transition:transform .15s,border-color .15s}
+.mod:hover{transform:translateY(-2px);border-color:var(--accent)}
+.mod .weeks{font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.mod .ico{font-size:2rem}
+.mod h3{margin:0 0 4px;font-size:1.2rem}
+.mod p{margin:0;color:var(--muted);font-size:.95rem}
+.mod .count{font-size:.85rem;color:var(--muted);text-align:right;white-space:nowrap}
+.ring{width:52px;height:52px}
+.project{background:linear-gradient(135deg,var(--card),var(--bg2));border:1.5px solid var(--accent);border-radius:var(--radius);padding:24px}
+.project ul{padding-left:20px}
+footer{color:var(--muted);text-align:center;font-size:.85rem;padding:40px 20px 60px;border-top:1px solid var(--line);margin-top:30px}
+
+/* ---------- Course player ---------- */
+.player{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 57px)}
+.side{border-right:1px solid var(--line);background:var(--bg2);padding:18px 14px;overflow:auto;max-height:calc(100vh - 57px);position:sticky;top:57px}
+.side .mtitle{font-size:.75rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:18px 8px 6px}
+.side .mtitle:first-child{margin-top:0}
+.side button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:none;color:var(--text);padding:9px 10px;border-radius:10px;font-size:.93rem}
+.side button:hover{background:var(--card)}
+.side button.active{background:var(--card);outline:1.5px solid var(--accent)}
+.side .dot{flex:0 0 18px;height:18px;border-radius:50%;border:2px solid var(--line);margin-top:2px;display:grid;place-items:center;font-size:11px}
+.side .done .dot{background:var(--ok);border-color:var(--ok);color:#05082a}
+.stage{padding:26px clamp(16px,4vw,56px) 40px;display:flex;flex-direction:column;min-width:0}
+.crumb{color:var(--muted);font-size:.85rem;margin-bottom:6px}
+.crumb b{color:var(--accent)}
+.stage h2{margin:0 0 14px;font-size:clamp(1.4rem,3vw,2rem)}
+.dots{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.dots span{width:26px;height:6px;border-radius:99px;background:var(--line);cursor:pointer}
+.dots span.on{background:var(--accent)}
+.dots span.seen{background:#4c5bb5}
+.slide{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(18px,3vw,32px);flex:1;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.slide h3{margin:0 0 14px;font-size:1.35rem}
+.slide p,.slide li{font-size:1.02rem}
+.goals{list-style:none;padding:0}
+.goals li{padding:10px 14px;margin:8px 0;background:var(--bg2);border-left:4px solid var(--accent);border-radius:8px}
+.goals li::before{content:"✓ ";color:var(--accent);font-weight:800}
+.steps li{margin:8px 0}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0}
+.flow span{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:8px 12px;text-align:center}
+.flow span small{color:var(--muted)}
+.flow .arrow{background:none;border:none;color:var(--accent);font-weight:700;padding:0}
+.tbl{border-collapse:collapse;width:100%;margin:10px 0;font-size:.95rem;display:block;overflow-x:auto}
+.tbl th,.tbl td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+.tbl th{background:var(--bg2);color:var(--accent)}
+pre{position:relative;background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px;overflow:auto;font-size:.88rem;line-height:1.5;margin:10px 0}
+pre code{background:none;border:none;padding:0;font-size:inherit;white-space:pre}
+.lang{position:absolute;top:8px;right:72px;font-size:.7rem;text-transform:uppercase;color:var(--muted)}
+.copy{position:absolute;top:6px;right:8px;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:3px 9px;font-size:.75rem}
+.tok-c{color:#6f7bb8;font-style:italic}.tok-s{color:#a5e88b}.tok-k{color:#7fd3ff}
+.note{background:rgba(0,209,255,.08);border:1px solid rgba(0,209,255,.35);border-radius:10px;padding:12px 14px;font-size:.95rem}
+.quiz-q{font-size:1.12rem;font-weight:600;margin-bottom:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg2);color:var(--text);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
+.opt:hover:not(:disabled){border-color:var(--accent2)}
+.opt.ok{border-color:var(--ok);background:rgba(61,220,132,.12)}
+.opt.ko{border-color:var(--ko);background:rgba(255,92,122,.12)}
+.explain{margin-top:12px;padding:12px 14px;border-radius:10px;background:var(--bg2)}
+.badge{display:inline-block;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:99px;margin-bottom:10px}
+.badge.q{background:rgba(0,209,255,.15);color:var(--accent2)}
+.badge.e{background:rgba(124,252,0,.15);color:var(--accent)}
+.reveal{background:transparent;color:var(--accent);border:1.5px solid var(--accent);border-radius:10px;padding:8px 14px;margin-top:10px}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px}
+.nav button{background:var(--card);color:var(--text);border:1.5px solid var(--line);border-radius:12px;padding:11px 20px;font-weight:600}
+.nav button.primary{background:var(--accent);color:#05082a;border-color:var(--accent)}
+.nav button:disabled{opacity:.35;cursor:default}
+.nav .hint{color:var(--muted);font-size:.8rem}
+.menu-btn{display:none;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:6px 12px}
+.done-box{text-align:center;padding:30px 10px}
+.done-box .big{font-size:3rem}
+
+@media (max-width:860px){
+  .player{grid-template-columns:1fr}
+  .side{position:fixed;inset:57px 0 0 0;max-height:none;z-index:15;transform:translateX(-100%);transition:transform .25s}
+  .side.open{transform:none}
+  .menu-btn{display:inline-block}
+  .mod{grid-template-columns:1fr;gap:8px}
+  .mod .count{text-align:left}
+  .bar{width:60px}
+  .brand{font-size:.9rem}
+  .global-progress{white-space:nowrap;gap:6px}
+  .nav .hint{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="menu-btn hidden" id="menuBtn" aria-label="Menu des leçons">☰</button>
+    <div class="brand" id="homeLink">☕ <div>Bootcamp <span>Fullstack Java</span></div></div>
+  </div>
+  <div class="global-progress"><span id="progressLabel">0 %</span><div class="bar"><i id="progressBar"></i></div></div>
+</div>
+
+<!-- ================= HOME ================= -->
+<div id="home">
+  <div class="wrap">
+    <section class="hero">
+      <div class="kicker">Cours interactif · autonome · gratuit</div>
+      <h1>Deviens développeur <em>Fullstack Java</em> en 16 semaines</h1>
+      <p>Un bloc de semaines, un outil, un livrable. Fini les tutos en désordre : suis le programme dans l'ordre,
+      réponds aux quiz, fais les exercices et construis un vrai projet de bout en bout.</p>
+      <div class="chips" id="techChips"></div>
+      <button class="cta" id="startBtn">Commencer le cours →</button>
+    </section>
+
+    <section class="section">
+      <h2>La méthode</h2>
+      <p class="sub">Trois règles pour avancer sans te disperser.</p>
+      <div class="method">
+        <div><b>1 · Un bloc = un outil</b>Chaque bloc de semaines se concentre sur une seule brique technique.</div>
+        <div><b>2 · Pratique d'abord</b>Chaque leçon se termine par un quiz et un exercice corrigé.</div>
+        <div><b>3 · Un livrable par module</b>Tu publies ton travail sur GitHub : ton portfolio se construit au fil des semaines.</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Le programme</h2>
+      <p class="sub">Compte environ 10 à 15 heures de travail par semaine. Clique sur un module pour l'ouvrir.</p>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <section class="section">
+      <h2>Le projet fil rouge</h2>
+      <div class="project">__PROJECT__</div>
+    </section>
+
+    <section class="section">
+      <h2>Prérequis</h2>
+      <p class="sub">Aucune expérience en programmation n'est nécessaire. Il te faut :</p>
+      <ul>
+        <li>un ordinateur (Windows, macOS ou Linux) avec au moins 8 Go de RAM ;</li>
+        <li>un compte GitHub gratuit ;</li>
+        <li>du temps régulier : mieux vaut 1 h 30 par jour que 10 h le dimanche.</li>
+      </ul>
+    </section>
+  </div>
+  <footer>Ta progression est enregistrée dans ce navigateur. · Cours open source publié sur GitHub.</footer>
+</div>
+
+<!-- ================= PLAYER ================= -->
+<div id="player" class="player hidden">
+  <aside class="side" id="side"></aside>
+  <main class="stage">
+    <div class="crumb" id="crumb"></div>
+    <h2 id="lessonTitle"></h2>
+    <div class="dots" id="dots"></div>
+    <div class="slide" id="slide"></div>
+    <div class="nav">
+      <button id="prevBtn">← Précédent</button>
+      <span class="hint">Astuce : utilise les flèches ← → du clavier</span>
+      <button id="nextBtn" class="primary">Suivant →</button>
+    </div>
+  </main>
+</div>
+
+<script>
+const MODULES = __DATA__;
+
+/* ---------- état & stockage ---------- */
+const KEY = "bootcamp-fullstack-java-v1";
+let store = { done: {}, last: null, quiz: {} };
+try { const s = localStorage.getItem(KEY); if (s) store = Object.assign(store, JSON.parse(s)); } catch (e) {}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+
+const flat = [];
+MODULES.forEach((m, mi) => m.lessons.forEach((l, li) => flat.push({ mi, li, id: m.id + "-" + li })));
+let cur = { mi: 0, li: 0, si: 0 };
+
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ---------- coloration très légère ---------- */
+function highlight(code, lang){
+  let h = esc(code);
+  const commentRe = (lang === "sql") ? /(--[^\n]*)/g
+    : (["bash","yaml","properties","text","dockerfile"].includes(lang)) ? /(^|\s)(#[^\n]*)/gm
+    : /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)/g;
+  if (lang === "html") return h.replace(/(&lt;!--[\s\S]*?--&gt;)/g,'<span class="tok-c">$1</span>');
+  if (["bash","yaml","properties","text","dockerfile"].includes(lang)) {
+    return h.replace(commentRe, '$1<span class="tok-c">$2</span>');
+  }
+  h = h.replace(commentRe, '<span class="tok-c">$1</span>');
+  if (["java","jsx","sql"].includes(lang)) {
+    const kw = lang === "sql"
+      ? /\b(SELECT|FROM|WHERE|INSERT|INTO|VALUES|UPDATE|SET|DELETE|CREATE|TABLE|DATABASE|USE|PRIMARY|KEY|FOREIGN|REFERENCES|JOIN|LEFT|ON|GROUP|BY|ORDER|HAVING|LIMIT|AS|AND|NOT|NULL|DEFAULT|DESC|INT|VARCHAR|DECIMAL|DATETIME|ENUM|UNIQUE|AUTO_INCREMENT|CHECK|COUNT|SUM)\b/g
+      : /\b(public|private|static|final|class|interface|record|extends|implements|return|new|if|else|for|while|void|int|double|boolean|throw|throws|import|export|default|function|const|let|async|await|try|catch)\b/g;
+    h = h.split(/(<span class="tok-c">[\s\S]*?<\/span>)/).map(part =>
+      part.startsWith('<span') ? part : part.replace(kw, '<span class="tok-k">$1</span>')).join("");
+  }
+  return h;
+}
+
+/* ---------- accueil ---------- */
+function ring(p){
+  const r = 22, c = 2 * Math.PI * r;
+  return `<svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="${r}" fill="none" stroke="#232c6e" stroke-width="5"/>
+  <circle cx="26" cy="26" r="${r}" fill="none" stroke="#7CFC00" stroke-width="5" stroke-linecap="round"
+  stroke-dasharray="${c}" stroke-dashoffset="${c * (1 - p)}" transform="rotate(-90 26 26)"/>
+  <text x="26" y="30" text-anchor="middle" fill="#eef1ff" font-size="12" font-weight="700">${Math.round(p*100)}%</text></svg>`;
+}
+function renderHome(){
+  $("techChips").innerHTML = ["Git","Java 21","SQL","MySQL","Spring Boot","JPA","JWT","HTML","CSS","React","GitHub Actions","Docker"]
+    .map(t => `<span class="chip">${t}</span>`).join("");
+  $("timeline").innerHTML = MODULES.map((m, mi) => {
+    const d = m.lessons.filter((_, li) => store.done[m.id + "-" + li]).length;
+    return `<div class="mod" data-mi="${mi}">
+      <div><div class="weeks">${m.weeks}</div><div class="ico">${m.icon}</div></div>
+      <div><h3>${m.title}</h3><p>${m.summary}</p><p style="margin-top:8px"><b style="color:var(--accent)">🎯 Livrable :</b> ${m.deliverable}</p></div>
+      <div class="count">${ring(d / m.lessons.length)}<div>${m.lessons.length} leçons</div></div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll(".mod").forEach(el => el.onclick = () => openLesson(+el.dataset.mi, 0, 0));
+  const started = Object.keys(store.done).length > 0 || store.last;
+  $("startBtn").textContent = started ? "Reprendre le cours →" : "Commencer le cours →";
+  updateProgress();
+}
+function updateProgress(){
+  const p = Math.round(100 * Object.keys(store.done).length / flat.length);
+  $("progressLabel").textContent = p + " %";
+  $("progressBar").style.width = p + "%";
+}
+
+/* ---------- lecteur ---------- */
+function renderSide(){
+  $("side").innerHTML = MODULES.map((m, mi) =>
+    `<div class="mtitle">${m.icon} ${m.weeks} · ${m.title}</div>` +
+    m.lessons.map((l, li) => {
+      const id = m.id + "-" + li, act = (mi === cur.mi && li === cur.li);
+      return `<button class="${store.done[id] ? "done" : ""} ${act ? "active" : ""}" data-mi="${mi}" data-li="${li}">
+        <span class="dot">${store.done[id] ? "✓" : ""}</span><span>${l.title}</span></button>`;
+    }).join("")
+  ).join("");
+  $("side").querySelectorAll("button").forEach(b => b.onclick = () => { openLesson(+b.dataset.mi, +b.dataset.li, 0); $("side").classList.remove("open"); });
+}
+
+function renderSlide(){
+  const m = MODULES[cur.mi], l = m.lessons[cur.li], s = l.slides[cur.si];
+  $("crumb").innerHTML = `<b>${m.weeks}</b> · ${m.title}`;
+  $("lessonTitle").textContent = l.title;
+  $("dots").innerHTML = l.slides.map((_, i) => `<span class="${i === cur.si ? "on" : (i < cur.si ? "seen" : "")}" data-i="${i}" title="Slide ${i+1}"></span>`).join("");
+  $("dots").querySelectorAll("span").forEach(d => d.onclick = () => { cur.si = +d.dataset.i; renderSlide(); });
+
+  let html = "";
+  if (s.type === "text") {
+    html = `<h3>${s.title}</h3>${s.html}`;
+  } else if (s.type === "code") {
+    html = `<h3>${s.title}</h3>${codeBlock(s.code, s.lang)}${s.note ? `<div class="note">💡 ${s.note}</div>` : ""}`;
+  } else if (s.type === "quiz") {
+    const qid = `${m.id}-${cur.li}-${cur.si}`;
+    html = `<span class="badge q">Quiz</span><div class="quiz-q">${s.question}</div>` +
+      s.options.map((o, i) => `<button class="opt" data-i="${i}">${esc(o)}</button>`).join("") +
+      `<div class="explain hidden" id="explain"></div>`;
+    setTimeout(() => {
+      const btns = [...document.querySelectorAll(".opt")];
+      const show = (choice) => {
+        btns.forEach((b, i) => { b.disabled = true; if (i === s.answer) b.classList.add("ok"); else if (i === choice) b.classList.add("ko"); });
+        const ok = choice === s.answer;
+        $("explain").innerHTML = (ok ? "✅ <b>Bonne réponse !</b> " : "❌ <b>Pas tout à fait.</b> ") + s.explain;
+        $("explain").classList.remove("hidden");
+      };
+      if (store.quiz[qid] !== undefined) show(store.quiz[qid]);
+      btns.forEach((b, i) => b.onclick = () => { store.quiz[qid] = i; save(); show(i); });
+    });
+  } else if (s.type === "exercise") {
+    html = `<span class="badge e">Exercice</span><h3>${s.title}</h3>${s.task}
+      <button class="reveal" id="revealBtn">👀 Voir une solution</button>
+      <div class="hidden" id="solution">${codeBlock(s.solution, s.lang)}<div class="note">Essaie toujours par toi-même avant de regarder : c'est en bloquant qu'on apprend.</div></div>`;
+    setTimeout(() => $("revealBtn").onclick = () => { $("solution").classList.toggle("hidden"); });
+  }
+  $("slide").innerHTML = html;
+  $("slide").style.animation = "none"; void $("slide").offsetWidth; $("slide").style.animation = "";
+  $("slide").querySelectorAll(".copy").forEach(b => b.onclick = () => {
+    const txt = b.parentElement.querySelector("code").innerText;
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(() => { b.textContent = "Copié ✓"; setTimeout(() => b.textContent = "Copier", 1500); }).catch(() => {});
+  });
+
+  const idx = flat.findIndex(f => f.mi === cur.mi && f.li === cur.li);
+  const lastSlide = cur.si === l.slides.length - 1;
+  $("prevBtn").disabled = (idx === 0 && cur.si === 0);
+  $("nextBtn").textContent = lastSlide ? (idx === flat.length - 1 ? "Terminer 🎉" : "Leçon terminée ✓ →") : "Suivant →";
+  store.last = { mi: cur.mi, li: cur.li, si: cur.si }; save();
+  window.scrollTo({ top: 0 });
+}
+function codeBlock(code, lang){
+  return `<pre><span class="lang">${lang}</span><button class="copy">Copier</button><code>${highlight(code, lang)}</code></pre>`;
+}
+
+function openLesson(mi, li, si){
+  cur = { mi, li, si };
+  $("home").classList.add("hidden"); $("player").classList.remove("hidden"); $("menuBtn").classList.remove("hidden");
+  renderSide(); renderSlide();
+  history.replaceState(null, "", `#${MODULES[mi].id}-${li}`);
+}
+function goHome(){
+  $("player").classList.add("hidden"); $("home").classList.remove("hidden"); $("menuBtn").classList.add("hidden");
+  history.replaceState(null, "", location.pathname);
+  renderHome(); window.scrollTo({ top: 0 });
+}
+function next(){
+  const l = MODULES[cur.mi].lessons[cur.li];
+  if (cur.si < l.slides.length - 1) { cur.si++; renderSlide(); return; }
+  store.done[MODULES[cur.mi].id + "-" + cur.li] = true; save(); updateProgress();
+  const idx = flat.findIndex(f => f.mi === cur.mi && f.li === cur.li);
+  if (idx < flat.length - 1) { const n = flat[idx + 1]; openLesson(n.mi, n.li, 0); }
+  else finish();
+}
+function prev(){
+  if (cur.si > 0) { cur.si--; renderSlide(); return; }
+  const idx = flat.findIndex(f => f.mi === cur.mi && f.li === cur.li);
+  if (idx > 0) { const p = flat[idx - 1]; openLesson(p.mi, p.li, MODULES[p.mi].lessons[p.li].slides.length - 1); }
+}
+function finish(){
+  renderSide();
+  $("slide").innerHTML = `<div class="done-box"><div class="big">🎉</div><h3>Bravo, tu as terminé le bootcamp !</h3>
+  <p>Vérifie que ton projet LibraStock est en ligne, que ta CI est verte et que ton README est prêt pour les recruteurs.</p>
+  <button class="cta" onclick="goHome()">Retour au programme</button></div>`;
+}
+
+/* ---------- événements ---------- */
+$("nextBtn").onclick = next;
+$("prevBtn").onclick = prev;
+$("homeLink").onclick = goHome;
+$("menuBtn").onclick = () => $("side").classList.toggle("open");
+$("startBtn").onclick = () => {
+  if (store.last) openLesson(store.last.mi, store.last.li, store.last.si);
+  else openLesson(0, 0, 0);
+};
+document.addEventListener("keydown", e => {
+  if ($("player").classList.contains("hidden")) return;
+  if (e.key === "ArrowRight") next();
+  if (e.key === "ArrowLeft") prev();
+});
+
+renderHome();
+const h = location.hash.match(/^#(m\d)-(\d+)$/);
+if (h) { const mi = MODULES.findIndex(m => m.id === h[1]); if (mi >= 0 && MODULES[mi].lessons[+h[2]]) openLesson(mi, +h[2], 0); }
+</script>
+</body>
+</html>
